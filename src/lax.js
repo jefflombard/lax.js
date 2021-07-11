@@ -582,7 +582,14 @@
       }
 
       addElements = (selector, transforms, options) => {
-        const domElements = document.querySelectorAll(selector)
+        let domElements
+        if (typeof selector === "string") {
+          domElements = document.querySelectorAll(selector)
+        } else if(Array.isArray(selector)){
+          domElements = selector
+        } else {
+          domElements = [selector]
+        }
 
         domElements.forEach((domElement, i) => {
           this.elements.push(new LaxElement(selector, this, domElement, transforms, i, options))
